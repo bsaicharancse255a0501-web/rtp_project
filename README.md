@@ -1,4 +1,4 @@
-AI News Suumarizer
+AI News Suumarizer project
 
 A full-stack React + TypeScript application that extracts news articles from URLs, uses an LLM through the Groq OpenAI-compatible API to summarize and translate them, and stores authenticated users' reports in Supabase.
 
