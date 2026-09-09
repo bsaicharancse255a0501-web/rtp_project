@@ -1,0 +1,11 @@
+{
+  "name": "AI News Summarizer",
+  "description": "Distill complex information into elegant, multi-language reports. Powered by advanced AI for rapid synthesis.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "Multi-link Article Synthesis",
+    "Real-time Metadata Scraping",
+    "Polyglot Language Support",
+    "Deep Sentiment Analysis"
+  ]
+}
