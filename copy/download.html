@@ -1,0 +1,29 @@
+ <div id="summary">
+  This is the AI generated summary...
+</div>
+
+<button onclick="copySummary()">📋 Copy Summary</button>
+<button onclick="downloadSummary()">⬇️ Download Summary</button>
+
+<script>
+function copySummary() {
+    const summary = document.getElementById("summary").innerText;
+
+    navigator.clipboard.writeText(summary).then(() => {
+        alert("Summary copied!");
+    });
+}
+
+function downloadSummary() {
+    const summary = document.getElementById("summary").innerText;
+
+    const blob = new Blob([summary], { type: "text/plain" });
+    const link = document.createElement("a");
+
+    link.href = URL.createObjectURL(blob);
+    link.download = "AI_Summary.txt";
+    link.click();
+
+    URL.revokeObjectURL(link.href);
+}
+</script>
