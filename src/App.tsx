@@ -1,4 +1,5 @@
 import { type ChangeEvent, type FormEvent, useMemo, useState } from 'react';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 
 type Article = {
   title?: string;
@@ -22,6 +23,7 @@ type SummaryResult = {
 };
 
 function App() {
+  const [showSummarizer, setShowSummarizer] = useState(false);
   const [url, setUrl] = useState('https://example.com');
   const [article, setArticle] = useState<Article | null>(null);
   const [summary, setSummary] = useState<SummaryResult | null>(null);
@@ -116,66 +118,106 @@ function App() {
   };
 
   return (
-    <main className="page-shell">
-      <section className="panel">
-        <p className="eyebrow">AI News Toolkit</p>
-        <h1>Download the news</h1>
-        <p className="subtitle">
-          Paste a news URL, extract the article, generate a summary, and download it as a plain text file.
-        </p>
-
-        <form onSubmit={handleSubmit} className="news-form">
-          <input
-            type="url"
-            value={url}
-            onChange={(event: ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
-            placeholder="https://example.com/news/article"
-            aria-label="News URL"
-          />
-          <button type="submit" disabled={loading}>
-            {loading ? 'Processing…' : 'Extract & Summarize'}
-          </button>
-        </form>
-
-        {error ? <div className="message error">{error}</div> : null}
-
-        {article ? (
-          <div className="result-card">
-            <div className="meta-row">
-              {article.image ? <img src={article.image} alt={article.title || 'Article'} /> : null}
-              <div>
-                <span className="badge">{article.source || 'Source'}</span>
-                <h2>{article.title || 'Untitled article'}</h2>
-                <p>
-                  {article.author ? `By ${article.author}` : 'Author unavailable'}
-                  {article.publishedDate ? ` • ${article.publishedDate}` : ''}
-                </p>
-              </div>
-            </div>
-
-            {summary ? (
-              <div className="summary-block">
-                <h3>Summary</h3>
-                <p>{firstLanguageReport?.summary || article.content || 'No summary available.'}</p>
-
-                {firstLanguageReport?.highlights && firstLanguageReport.highlights.length > 0 ? (
-                  <ul>
-                    {firstLanguageReport.highlights.map((point: string) => (
-                      <li key={point}>{point}</li>
-                    ))}
-                  </ul>
-                ) : null}
-              </div>
-            ) : null}
-
-            <div className="actions">
-              <button type="button" className="secondary" onClick={handleDownload}>
-                Download News
-              </button>
-            </div>
+    <main className={`page-shell${showSummarizer ? '' : ' welcome-shell'}`}>
+      {showSummarizer ? (
+        <section className="panel">
+          <div className="workspace-heading">
+            <button
+              type="button"
+              className="back-button"
+              onClick={() => setShowSummarizer(false)}
+              aria-label="Back to welcome page"
+              title="Back to welcome page"
+            >
+              <ArrowLeft size={18} aria-hidden="true" />
+              <span>Welcome</span>
+            </button>
+            <p className="eyebrow">AI News Summarizer</p>
           </div>
-        ) : null}
-      </section>
+          <h1>Summarize the news</h1>
+          <p className="subtitle">
+            Paste a news URL, extract the article, generate a summary, and download it as a plain text file.
+          </p>
+
+          <form onSubmit={handleSubmit} className="news-form">
+            <input
+              type="url"
+              value={url}
+              onChange={(event: ChangeEvent<HTMLInputElement>) => setUrl(event.target.value)}
+              placeholder="https://example.com/news/article"
+              aria-label="News URL"
+            />
+            <button type="submit" disabled={loading}>
+              {loading ? 'Processing…' : 'Extract & Summarize'}
+            </button>
+          </form>
+
+          {error ? <div className="message error">{error}</div> : null}
+
+          {article ? (
+            <div className="result-card">
+              <div className="meta-row">
+                {article.image ? <img src={article.image} alt={article.title || 'Article'} /> : null}
+                <div>
+                  <span className="badge">{article.source || 'Source'}</span>
+                  <h2>{article.title || 'Untitled article'}</h2>
+                  <p>
+                    {article.author ? `By ${article.author}` : 'Author unavailable'}
+                    {article.publishedDate ? ` • ${article.publishedDate}` : ''}
+                  </p>
+                </div>
+              </div>
+
+              {summary ? (
+                <div className="summary-block">
+                  <h3>Summary</h3>
+                  <p>{firstLanguageReport?.summary || article.content || 'No summary available.'}</p>
+
+                  {firstLanguageReport?.highlights && firstLanguageReport.highlights.length > 0 ? (
+                    <ul>
+                      {firstLanguageReport.highlights.map((point: string) => (
+                        <li key={point}>{point}</li>
+                      ))}
+                    </ul>
+                  ) : null}
+                </div>
+              ) : null}
+
+              <div className="actions">
+                <button type="button" className="secondary" onClick={handleDownload}>
+                  Download News
+                </button>
+              </div>
+            </div>
+          ) : null}
+        </section>
+      ) : (
+        <section className="welcome-page">
+          <img
+            className="welcome-image"
+            src="https://images.unsplash.com/photo-1504711434969-e33886168f5c?auto=format&fit=crop&w=2400&q=85"
+            alt=""
+            aria-hidden="true"
+          />
+          <div className="welcome-overlay" aria-hidden="true" />
+          <div className="welcome-content">
+            <p className="welcome-label">A clearer view of the news</p>
+            <h1>AI News<br />Summarizer</h1>
+            <p className="welcome-description">
+              Step past the noise. Find the story that matters.
+            </p>
+            <button
+              type="button"
+              className="welcome-cta"
+              onClick={() => setShowSummarizer(true)}
+            >
+              <span>Start summarizing</span>
+              <ArrowRight size={19} aria-hidden="true" />
+            </button>
+          </div>
+          <p className="welcome-footer">Read with perspective.</p>
+        </section>
+      )}
     </main>
   );
 }
