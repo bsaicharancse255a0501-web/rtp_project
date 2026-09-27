@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import { createServer as createViteServer } from "vite";
 import path from "path";
@@ -10,14 +11,13 @@ async function startServer() {
   const app = express();
   const PORT = 3000;
 
-  // Initialize OpenAI client mapped to Groq using explicit user key
-  const userRequestedKey = "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";
-  const currentKey = userRequestedKey || process.env.GROQ_API_KEY;
-  
-  const openai = new OpenAI({
-    apiKey: currentKey,
-    baseURL: "https://api.groq.com/openai/v1",
-  });
+  const currentKey = process.env.GROQ_API_KEY;
+  const openai = currentKey
+    ? new OpenAI({
+        apiKey: currentKey,
+        baseURL: "https://api.groq.com/openai/v1",
+      })
+    : null;
 
   // Trust proxy for rate limiting behind Cloud Run/Nginx
   app.set("trust proxy", 1);
