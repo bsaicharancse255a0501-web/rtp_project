@@ -1,0 +1,1126 @@
+Worked for 27s
+
+### DEVOPS LAB – 28 Experiments
+
+Based on your uploaded MGIT DevOps Lab PDF. All 28 experiments are arranged in the same order.
+
+### Category 1: HTML & Git
+
+### Experiment 1 – Event Registration Form
+
+File: `EventRegistrationForm.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<head>
+<title>Event Registration Form</title>
+<style>
+body { font-family: Arial; background: #f2f2f2; }
+form { width: 350px; margin: auto; padding: 20px;
+background: white; border-radius: 8px; }
+h2 { text-align: center; }
+button { background: blue; color: white; padding: 8px; }
+#successmsg { color: green; }
+</style>
+</head>
+<body>
+
+<h2>Event Registration</h2>
+
+<form id="regForm" onsubmit="register(event)">
+First Name: <input id="firstName" required><br><br>
+Last Name: <input id="lastName" required><br><br>
+Email: <input type="email" id="email" required><br><br>
+Phone: <input id="phNo" pattern="[0-9]{10}" required><br><br>
+DOB: <input type="date" id="dob" required><br><br>
+
+Gender:
+<input type="radio" name="gender" required>Male
+<input type="radio" name="gender">Female<br><br>
+
+Address: <textarea id="address" required></textarea><br><br>
+
+Branch:
+<select id="branch">
+<option>CSE</option>
+<option>ECE</option>
+<option>IT</option>
+<option>EEE</option>
+</select><br><br>
+
+<input type="checkbox" id="terms" required>
+Accept terms<br><br>
+
+<button type="submit">Register</button>
+<button type="reset">Reset</button>
+
+<p id="successmsg" hidden>
+Thank You For Registering :)
+</p>
+</form>
+
+<script>
+function register(event) {
+    event.preventDefault();
+    document.getElementById("regForm").reset();
+    document.getElementById("successmsg").hidden = false;
+}
+</script>
+
+</body>
+</html>
+```
+
+### Experiment 2 – Simple Jenkins Pipeline
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Hello') {
+            steps {
+                echo 'Hello, Jenkins!'
+            }
+        }
+    }
+}
+```
+
+### Experiment 3 – Workspace File Handling Pipeline
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Create File') {
+            steps {
+                writeFile file: 'pipeline.txt',
+                text: 'Created by Jenkins Pipeline'
+            }
+        }
+
+        stage('Read File') {
+            steps {
+                echo readFile('pipeline.txt')
+                archiveArtifacts artifacts: 'pipeline.txt'
+            }
+        }
+    }
+}
+```
+
+### Experiment 4 – Source Code Management Using GitHub
+
+```bash
+git config --global user.name "Your Name"
+git config --global user.email "you@example.com"
+
+git init
+
+git add EventRegistrationForm.html
+
+git commit -m "Initial registration form"
+
+git branch -M main
+
+git remote add origin https://github.com/USER/event-registration.git
+
+git push -u origin main
+
+git branch alternate
+
+git switch alternate
+```
+
+Add this HTML before the Register button:
+
+```html
+<label>Alternate Phone Number</label>
+<input type="tel" pattern="[0-9]{10}">
+```
+
+Continue:
+
+```bash
+git add EventRegistrationForm.html
+
+git commit -m "Extra Field Added"
+
+git switch main
+
+git merge alternate
+
+git push origin main
+
+git log --oneline
+
+git status
+```
+
+### Experiment 5 – Parameterized Jenkins Pipeline
+
+```groovy
+pipeline {
+    agent any
+
+    parameters {
+        string(name: 'USERNAME',
+        defaultValue: 'Student',
+        description: 'Enter your name')
+    }
+
+    stages {
+        stage('Greeting') {
+            steps {
+                echo "Hello, ${params.USERNAME}!"
+            }
+        }
+    }
+}
+```
+
+### Experiment 6 – GitHub Profile README
+
+File: `README.md`
+
+```markdown
+# Hi, I am a CSE student
+
+## About Me
+- Interested in software development and DevOps.
+- Currently learning Git, Jenkins and Docker.
+
+## Skills
+- C, Java, Python, HTML and JavaScript
+- Git, GitHub and Docker
+
+![Python](https://img.shields.io/badge/Python-blue)
+
+## Activity
+- Building an event registration application.
+- Practicing data structures and algorithms.
+
+## Connect with me
+[GitHub](https://github.com/USER)
+```
+
+### Experiment 7 – Scheduled Jenkins Pipeline
+
+```groovy
+pipeline {
+    agent any
+
+    triggers {
+        cron('H/5 * * * *')
+    }
+
+    stages {
+        stage('Scheduled Task') {
+            steps {
+                echo 'Scheduled pipeline executed'
+            }
+        }
+    }
+}
+```
+
+### Experiment 8 – Code Snippet Library Repository
+
+Git commands:
+
+```bash
+mkdir code-snippets
+cd code-snippets
+
+git init
+
+mkdir c java python
+```
+
+C – `hello.c`
+
+```c
+#include <stdio.h>
+
+int main() {
+    printf("Hello World\n");
+    return 0;
+}
+```
+
+Java – `HelloWorld.java`
+
+```java
+class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World");
+    }
+}
+```
+
+Python – `hello.py`
+
+```python
+print("Hello World")
+```
+
+Git commands:
+
+```bash
+git add .
+
+git commit -m "Add code snippets"
+
+git branch -M main
+
+git remote add origin https://github.com/USER/code-snippets.git
+
+git push -u origin main
+```
+
+### Experiment 9 – Multi-stage Jenkins Pipeline
+
+```groovy
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                echo 'Building application'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Testing application'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying application'
+            }
+        }
+    }
+}
+```
+
+### Experiment 10 – Git Branching Story Project
+
+```bash
+mkdir tale-in-branches
+cd tale-in-branches
+
+git init -b main
+
+echo "# A Tale in Branches" > README.md
+
+git add README.md
+git commit -m "Start book"
+
+git switch -c chapter1
+
+echo '<h2>Chapter 1</h2><p>A journey begins.</p>' > ch1.html
+
+git add ch1.html
+git commit -m "Add chapter 1"
+
+git switch main
+git switch -c chapter2
+
+echo '<h2>Chapter 2</h2><p>A friend arrives.</p>' > ch2.html
+
+git add ch2.html
+git commit -m "Add chapter 2"
+
+git switch main
+git switch -c chapter3
+
+echo '<h2>Chapter 3</h2><p>They reach home.</p>' > ch3.html
+
+git add ch3.html
+git commit -m "Add chapter 3"
+
+git switch main
+
+git merge chapter1
+git merge chapter2
+git merge chapter3
+
+echo '<!DOCTYPE html><html><body><h1>A Tale in Branches</h1>' > book.html
+
+cat ch1.html ch2.html ch3.html >> book.html
+
+echo '</body></html>' >> book.html
+
+git add book.html
+git commit -m "Create final book"
+
+git log --oneline --graph --all
+```
+
+Optional GitHub commands:
+
+```bash
+git remote add origin https://github.com/USER/tale-in-branches.git
+git push -u origin main
+```
+
+### Category 2: Jenkins Freestyle & CI/CD
+
+### Experiment 11 – File Creation and Copying Using Freestyle
+
+Windows Batch Commands
+
+```bat
+echo Hello from Jenkins > original.txt
+
+copy /Y original.txt copied.txt
+
+type copied.txt
+
+dir
+```
+
+### Experiment 12 – Continuous Integration and Continuous Development Using Jenkins
+
+Source Code Management
+
+```text
+Repository URL:
+https://github.com/USER/event-registration.git
+
+Branch Specifier:
+*/main
+```
+
+Build Trigger – Poll SCM
+
+```text
+H/5 * * * *
+```
+
+Windows Batch Commands
+
+```bat
+@echo off
+
+if not exist EventRegistrationForm.html exit /b 1
+
+findstr /C:"regForm" EventRegistrationForm.html >nul
+
+if errorlevel 1 exit /b 1
+
+if not exist dist mkdir dist
+
+copy /Y EventRegistrationForm.html dist\index.html
+
+if errorlevel 1 exit /b 1
+
+echo Build and basic test successful.
+
+echo Delivery artifact ready.
+```
+
+Archive Artifacts
+
+```text
+dist/*.html
+```
+
+### Experiment 13 – Hello World Freestyle and Workspace Variables
+
+```bat
+echo Hello, Jenkins!
+
+echo Workspace: %WORKSPACE%
+
+echo Job Name: %JOB_NAME%
+
+echo Build Number: %BUILD_NUMBER%
+```
+
+### Experiment 14 – Parameterized Freestyle Project
+
+Parameter Configuration
+
+```text
+Name: USERNAME
+Default Value: Student
+Description: Enter your name
+```
+
+Windows Batch Command
+
+```bat
+echo Hello, %USERNAME%!
+```
+
+### Experiment 15 – Scheduled Freestyle Project
+
+Build periodically
+
+```text
+H/5 * * * *
+```
+
+Windows Batch Commands
+
+```bat
+echo Scheduled Freestyle build executed
+
+echo Date: %DATE%
+
+echo Time: %TIME%
+```
+
+### Experiment 16 – Install and Set Up Jenkins
+
+Command Prompt
+
+```bash
+java -version
+```
+
+Jenkins URL
+
+```text
+https://www.jenkins.io/download/
+```
+
+Open Jenkins
+
+```text
+http://localhost:8080
+```
+
+### Category 3: Docker
+
+### Experiment 17 – Docker Commands for Container Management
+
+PowerShell / Terminal
+
+```bash
+docker version
+
+docker info
+
+docker login
+
+docker search nginx
+
+docker pull nginx
+
+docker images
+
+docker inspect nginx
+
+docker create --name web nginx
+
+docker start web
+
+docker ps
+
+docker ps -a
+
+docker logs web
+
+docker exec web ls
+
+docker stop web
+
+docker rm web
+
+docker run -d --name web2 -p 8082:80 nginx
+
+docker stop web2
+
+docker rm web2
+
+docker rmi nginx
+
+docker run --rm hello-world
+```
+
+### Experiment 18 – Simple Containerized Application Using Docker
+
+File: `EventRegistrationForm.html`
+
+Use Experiment 1 HTML code.
+
+File: `Dockerfile`
+
+```dockerfile
+FROM nginx:alpine
+
+COPY EventRegistrationForm.html /usr/share/nginx/html/index.html
+
+EXPOSE 80
+```
+
+Execution Commands
+
+```bash
+docker build -t my-web-app .
+
+docker run -d --name event-app -p 8082:80 my-web-app
+
+docker ps
+```
+
+Browser
+
+```text
+http://localhost:8082/
+```
+
+Stop and Remove
+
+```bash
+docker stop event-app
+
+docker rm event-app
+```
+
+### Experiment 19 – Run a Python File Using Docker
+
+File: `hello.py`
+
+```python
+print("Hello World!")
+```
+
+File: `Dockerfile`
+
+```dockerfile
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY hello.py .
+
+CMD ["python", "hello.py"]
+```
+
+Execution Commands
+
+```bash
+docker build -t hello-python .
+
+docker run --rm hello-python
+```
+
+### Experiment 20 – Run a Java File Using Docker
+
+File: `HelloWorld.java`
+
+```java
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+```
+
+File: `Dockerfile`
+
+```dockerfile
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY HelloWorld.java .
+
+RUN javac HelloWorld.java
+
+CMD ["java", "HelloWorld"]
+```
+
+Execution Commands
+
+```bash
+docker build -t hello-java .
+
+docker run --rm hello-java
+```
+
+### Experiment 21 – Parameterized Constructor in Java Using Docker
+
+File: `Student.java`
+
+```java
+public class Student {
+    String name;
+    int age;
+
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    void display() {
+        System.out.println(name + " " + age);
+    }
+
+    public static void main(String[] args) {
+        Student s = new Student("Student", 20);
+        s.display();
+    }
+}
+```
+
+File: `Dockerfile`
+
+```dockerfile
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY Student.java .
+
+RUN javac Student.java
+
+CMD ["java", "Student"]
+```
+
+Execution Commands
+
+```bash
+docker build -t constructor-app .
+
+docker run --rm constructor-app
+```
+
+### Experiment 22 – Palindrome Program in Java Using Docker
+
+File: `Palindrome.java`
+
+```java
+public class Palindrome {
+    public static void main(String[] args) {
+
+        int n = 121, original = n, rev = 0;
+
+        while (n > 0) {
+            rev = rev * 10 + n % 10;
+            n = n / 10;
+        }
+
+        if (original == rev)
+            System.out.println("Palindrome");
+        else
+            System.out.println("Not Palindrome");
+    }
+}
+```
+
+File: `Dockerfile`
+
+```dockerfile
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY Palindrome.java .
+
+RUN javac Palindrome.java
+
+CMD ["java", "Palindrome"]
+```
+
+Execution Commands
+
+```bash
+docker build -t palindrome-app .
+
+docker run --rm palindrome-app
+```
+
+### Experiment 23 – Single Inheritance in Java Using Docker
+
+File: `Main.java`
+
+```java
+class Animal {
+    void eat() {
+        System.out.println("Animal eats");
+    }
+}
+
+class Dog extends Animal {
+    void bark() {
+        System.out.println("Dog barks");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+
+        Dog d = new Dog();
+
+        d.eat();
+        d.bark();
+    }
+}
+```
+
+File: `Dockerfile`
+
+```dockerfile
+FROM eclipse-temurin:21-jdk
+
+WORKDIR /app
+
+COPY Main.java .
+
+RUN javac Main.java
+
+CMD ["java", "Main"]
+```
+
+Execution Commands
+
+```bash
+docker build -t inheritance-app .
+
+docker run --rm inheritance-app
+```
+
+### Category 4: Kubernetes
+
+### Experiment 24 – Integrate Kubernetes with Docker
+
+Execution Commands
+
+```bash
+docker version
+
+kubectl config get-contexts
+
+kubectl config use-context docker-desktop
+
+kubectl cluster-info
+
+kubectl get nodes
+
+kubectl create deployment nginx-demo --image=nginx:alpine
+
+kubectl rollout status deployment/nginx-demo
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl delete deployment nginx-demo
+```
+
+### Experiment 25 – Automate Container Execution Using Kubernetes
+
+Docker Commands
+
+```bash
+docker build -t USER/event-app:v1 .
+
+docker login
+
+docker push USER/event-app:v1
+```
+
+File: `app.yaml`
+
+Replace `USER` with your Docker Hub username.
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: event-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: event
+  template:
+    metadata:
+      labels:
+        app: event
+    spec:
+      containers:
+      - name: web
+        image: USER/event-app:v1
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: event-service
+spec:
+  selector:
+    app: event
+  ports:
+  - port: 80
+    targetPort: 80
+  type: ClusterIP
+```
+
+Execution Commands
+
+```bash
+kubectl apply -f app.yaml
+
+kubectl rollout status deployment/event-app
+
+kubectl get pods
+
+kubectl get services
+
+kubectl port-forward service/event-service 8082:80
+```
+
+Browser
+
+```text
+http://localhost:8082/
+```
+
+Stop and Delete
+
+```bash
+kubectl delete -f app.yaml
+```
+
+### Category 5: Selenium
+
+### Experiment 26 – Download and Install Selenium
+
+Download
+
+```text
+https://www.selenium.dev/downloads/
+```
+
+Java Program: `FirstSeleniumPro.java`
+
+```java
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class FirstSeleniumPro {
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new EdgeDriver();
+
+        try {
+            driver.get("https://www.google.com");
+
+            System.out.println("Title: " + driver.getTitle());
+
+        } finally {
+            driver.quit();
+        }
+    }
+}
+```
+
+Execution: Run the Java project in NetBeans.
+
+### Experiment 27 – JavaScript Program and Testing Using Selenium
+
+File 1: `JavaScriptCalculator.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Simple Calculator</h2>
+
+<input type="number" id="a">
+
+<input type="number" id="b">
+
+<button id="add" onclick="add()">Add</button>
+
+<p id="result"></p>
+
+<script>
+function add() {
+    let a = Number(document.getElementById("a").value);
+
+    let b = Number(document.getElementById("b").value);
+
+    document.getElementById("result").innerHTML = a + b;
+}
+</script>
+
+</body>
+</html>
+```
+
+File 2: `CalculatorTest.java`
+
+```java
+import org.openqa.selenium.*;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class CalculatorTest {
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new EdgeDriver();
+
+        driver.get("file:///C:/DevOps/JavaScriptCalculator.html");
+
+        driver.findElement(By.id("a")).sendKeys("5");
+
+        driver.findElement(By.id("b")).sendKeys("3");
+
+        driver.findElement(By.id("add")).click();
+
+        String result =
+        driver.findElement(By.id("result")).getText();
+
+        if (result.equals("8"))
+            System.out.println("Test Passed: " + result);
+        else
+            System.out.println("Test Failed");
+
+        driver.quit();
+    }
+}
+```
+
+### Experiment 28 – Test Cases for Containerized Application Using Selenium
+
+File 1: `EventRegistrationForm.html`
+
+```html
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Event Registration</h2>
+
+<form>
+    Name:
+    <input id="name" required><br><br>
+
+    Phone:
+    <input id="phNo" pattern="[0-9]{10}" required><br><br>
+
+    <button type="submit">Register</button>
+</form>
+
+</body>
+</html>
+```
+
+File 2: `Dockerfile`
+
+```dockerfile
+FROM nginx:alpine
+
+COPY EventRegistrationForm.html /usr/share/nginx/html/index.html
+
+EXPOSE 80
+```
+
+Docker Execution Commands
+
+```bash
+docker build -t event-test-app .
+
+docker run -d --name event-test -p 8082:80 event-test-app
+```
+
+Browser
+
+```text
+http://localhost:8082/
+```
+
+File 3: `FormTest.java`
+
+```java
+import org.openqa.selenium.*;
+import org.openqa.selenium.edge.EdgeDriver;
+
+public class FormTest {
+
+    public static void main(String[] args) {
+
+        WebDriver driver = new EdgeDriver();
+
+        driver.get("http://localhost:8082/");
+
+        WebElement name = driver.findElement(By.id("name"));
+
+        WebElement phone = driver.findElement(By.id("phNo"));
+
+        // TC1: Valid name
+        name.sendKeys("Salman");
+
+        if (name.getDomProperty("validationMessage").isEmpty())
+            System.out.println("TC1: Passed");
+        else
+            System.out.println("TC1: Failed");
+
+        // TC2: Invalid phone number
+        phone.sendKeys("123");
+
+        if (!phone.getDomProperty("validationMessage").isEmpty())
+            System.out.println("TC2: Passed");
+        else
+            System.out.println("TC2: Failed");
+
+        // TC3: Valid phone number
+        phone.clear();
+
+        phone.sendKeys("1234567890");
+
+        if (phone.getDomProperty("validationMessage").isEmpty())
+            System.out.println("TC3: Passed");
+        else
+            System.out.println("TC3: Failed");
+
+        driver.quit();
+    }
+}
+```
+
+Expected Output
+
+```text
+TC1: Passed
+TC2: Passed
+TC3: Passed
+```
+
+Docker Cleanup
+
+```bash
+docker stop event-test
+
+docker rm event-test
+```
+
+### Quick execution command revision
+
+| Technology | Important commands                                       |
+| ---------- | -------------------------------------------------------- |
+| Git        | git init, git add ., git commit, git push                |
+| Jenkins    | pipeline, agent, stages, steps, echo                     |
+| Docker     | docker build, docker run, docker ps, docker stop         |
+| Kubernetes | kubectl apply, kubectl get pods, kubectl delete          |
+| Selenium   | driver.get(), findElement(), sendKeys(), click(), quit() |
+
+Source: Your uploaded DevOps Lab Exam PDF, Experiments 1–28. Commands and code are organized from the document; theory has been omitted.
+
+Important: Replace `USER` with your actual GitHub or Docker Hub username wherever required. For Docker experiments, keep the Dockerfile and source file in the same project folder.
